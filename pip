@@ -1,0 +1,56 @@
+使用 Python 的 pip 命令来安装 Open WebUI
+步骤 1: 安装 Python 3.11
+sudo apt update
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.11 python3.11-venv
+步骤 2: 创建并激活 Python 虚拟环境
+# 创建一个新的目录来存放 Open WebUI
+mkdir open-webui-standalone
+cd open-webui-standalone
+# 创建一个名为 'venv' 的虚拟环境
+python3.11 -m venv venv
+# 激活虚拟环境
+source venv/bin/activate
+步骤 3: 安装 Open WebUI
+pip install open-webui
+步骤 4: 启动 Open WebUI
+open-webui serve
+步骤 5: 访问 Open WebUI
+http://localhost:8080 
+export OPENWEBUI_HOST=0.0.0.0
+open-webui serve
+
+配置 Open WebUI 为系统服务 
+Open WebUI 在系统启动时自动运行，配置systemd服务
+1.退出虚拟环境 
+deactivate
+2.创建 Open WebUI 的 Systemd 服务文件
+sudo vi /etc/systemd/system/openwebui.service
+3.粘贴以下内容到文件中
+[Unit]
+Description=Open WebUI Service
+After=network.target
+
+[Service]
+Type=simple
+User=<shuwen1> # 将 <您的用户名> 替换为您实际的 Linux 用户名
+Group=<shuwen1> # 将 <您的用户名> 替换为您实际的 Linux 用户名
+WorkingDirectory=/path/to/your/open-webui-standalone # 替换为您的实际路径
+ExecStart=/path/to/your/open-webui-standalone/venv/bin/open-webui serve
+Restart=on-failure
+Environment="OPENWEBUI_HOST=0.0.0.0" # 可选：如果希望广泛监听
+
+[Install]
+WantedBy=multi-user.target
+
+5.重新加载 systemd 配置
+sudo systemctl daemon-reload
+6.启用 Open WebUI 服务在启动时自动运行
+sudo systemctl enable openwebui.service
+7.启动 Open WebUI 服务
+sudo systemctl start openwebui.service
+8.检查服务状态
+sudo systemctl status openwebui.service
+
