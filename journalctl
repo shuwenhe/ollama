@@ -1,1 +1,1 @@
-journalctl -e -u ollama
+sudo journalctl -u ollama -f
