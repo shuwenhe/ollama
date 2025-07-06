@@ -1,2 +1,3 @@
 curl -fsSL https://ollama.com/install.sh | sh
 https://github.com/ollama/ollama/blob/main/docs/linux.md
+systemd源码安装ollama
