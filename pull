@@ -1,0 +1,2 @@
+ollama pull deepseek-coder:6.7b
+ollama run deepseek-coder:6.7b
